@@ -92,10 +92,9 @@ This comprehensive learning material takes you through the fundamental concepts 
 2. Ensure you have Go 1.19+ installed
 3. Start with Section 1 and work through each section sequentially
 4. Each section contains:
-   - `README.md` - Concept explanations and theory
-   - `examples/` - Code examples and experiments
-   - `project/` - Main project for the section
-   - `exercises/` - Practice exercises
+   - `README.md` - Comprehensive theory and explanations with inline examples
+   - `demo.go` - One practical demonstration program showcasing key concepts
+   - `Makefile` - Simple build and run commands for the demo
 
 ## 📚 Additional Resources
 
