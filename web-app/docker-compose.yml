@@ -1,0 +1,53 @@
+version: '3.8'
+
+services:
+  # Backend API Server
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./backend:/app
+      - /var/run/docker.sock:/var/run/docker.sock  # For container management
+    environment:
+      - ENV=development
+    restart: unless-stopped
+
+  # Frontend Development Server
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    ports:
+      - "5173:5173"
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+    environment:
+      - VITE_API_URL=http://localhost:8080
+    restart: unless-stopped
+    depends_on:
+      - backend
+
+  # Learning Environment Container (template)
+  learning-env:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - ../:/learning:ro  # Mount learning materials as read-only
+    working_dir: /learning
+    tty: true
+    stdin_open: true
+    privileged: true  # Required for container operations in learning
+    profiles:
+      - learning  # Only start when explicitly requested
+
+volumes:
+  node_modules:
+
+networks:
+  default:
+    name: linux-containers-network
